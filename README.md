@@ -2,6 +2,8 @@
 
 This project is a flashcard application built using **Django** to help users review and memorize Python-related concepts. The app displays flashcards with questions and answers, allowing users to interactively browse and track their progress.
 
+[Try it now 🐍](https://fatimaalzahrani.github.io/Flashcard-with-Django/)
+
 https://github.com/user-attachments/assets/f0544b23-a8ba-474c-b933-208db559f0d8
 
 
@@ -18,8 +20,7 @@ https://github.com/user-attachments/assets/f0544b23-a8ba-474c-b933-208db559f0d8
 #### 1.1 Clone the Repository
 Clone the repository to your local machine using the following command:
 
-    ```bash
-git clone https://github.com/FatimaALzahrani/Flashcard-with-Django.git
+    git clone https://github.com/FatimaALzahrani/Flashcard-with-Django.git
 
 
 #### 2 Install Dependencies
@@ -27,26 +28,23 @@ Make sure you have **Python** and **Django** installed on your machine.
 
 To install the necessary packages, run:
 
-    ```bash
-pip install django
+    pip install django
 
 #### 3 Run the Local Server
 Start the development server:
 
-    ```bash
-python manage.py migrate
-python manage.py runserver
+    python manage.py migrate
+    python manage.py runserver
        
 Now you can access the application at:
 
-    ```bash
-http://127.0.0.1:8000
+    http://127.0.0.1:8000
 
 <hr/>
 
 ### Technologies Used
 
-- **Django**: The backend framework for building the application.
+- **Django**: The backend framework for building the website.
 - **Python**: The programming language for creating the flashcards content.
 - **HTML5**: For the webpage structure.
 - **CSS3**: For styling the application.
