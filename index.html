@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>واجب برمجة متقدمة</title>
+    <link type="image/x-icon" rel="shortcut icon" href=".\image.png" />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        background: linear-gradient(45deg, #306998, #ffd43b);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+        margin: 0;
+        padding: 0;
+        direction: ltr;
+        overflow: hidden;
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      h1 {
+        margin-top: 40px;
+        text-align: center;
+        font-size: 36px;
+        font-weight: 600;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      h3 {
+        text-align: center;
+        font-size: 26px;
+        font-weight: 400;
+        color: #fff;
+        margin-bottom: 30px;
+      }
+
+      .flashcards-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        padding: 20px;
+        margin-top: 50px;
+      }
+
+      .flashcard {
+        width: 250px;
+        height: 350px;
+        background-color: #ffffff;
+        background-image: url("flashcards/templates/image.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        border-radius: 15px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        perspective: 1000px;
+        transition: transform 0.6s ease-in-out, box-shadow 0.3s ease-in-out;
+      }
+
+      .flashcard-inner {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.6s;
+      }
+
+      .flashcard-front,
+      .flashcard-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 15px;
+      }
+
+      .flashcard-front {
+        background-color: #306998;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        font-weight: bold;
+        padding: 20px;
+        transition: transform 0.3s ease;
+      }
+
+      .flashcard-back {
+        font-family: "Roboto", sans-serif;
+        background-color: #ffd43b;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 18px;
+        font-weight: bold;
+        font-style: italic;
+        transform: rotateY(180deg);
+        padding: 20px;
+      }
+
+      .flashcard:hover .flashcard-inner {
+        transform: rotateY(180deg);
+      }
+
+      .flashcard:hover {
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        transform: scale(1.05);
+      }
+
+      .arrow-btn {
+        font-size: 30px;
+        background-color: transparent;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      .arrow-btn:hover {
+        transform: scale(1.2);
+        color: #1abc9c;
+      }
+
+      .arrow-left {
+        margin-right: 20px;
+      }
+
+      .arrow-right {
+        margin-left: 20px;
+      }
+
+      .flashcard-number {
+        font-size: 18px;
+        margin-top: 20px;
+        text-align: center;
+        color: #ffffff;
+        font-weight: bold;
+      }
+
+      .star {
+        position: absolute;
+        background-color: #fff;
+        border-radius: 50%;
+        opacity: 0.8;
+        animation: twinkle 1.5s infinite ease-in-out, move 10s linear infinite;
+      }
+
+      @keyframes twinkle {
+        0% {
+          opacity: 0.8;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.8;
+        }
+      }
+
+      @keyframes move {
+        0% {
+          transform: translateY(0) translateX(0);
+        }
+        100% {
+          transform: translateY(100vh) translateX(100vw);
+        }
+      }
+
+      @media screen and (max-width: 768px) {
+        .flashcards-container {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+        h3 {
+          font-size: 18px;
+        }
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/d5c6986420.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <h1>Advanced Programming in AI</h1>
+    <h3>The Inception of Python <i class="fab fa-python"></i></h3>
+
+    <div class="flashcard-number" id="card-number"></div>
+
+    <div class="flashcards-container">
+      <button class="arrow-btn arrow-left" onclick="moveSlide(-1)">
+        &#8592;
+      </button>
+
+      <div id="flashcards"></div>
+
+      <button class="arrow-btn arrow-right" onclick="moveSlide(1)">
+        &#8594;
+      </button>
+    </div>
+
+    <script>
+      let currentIndex = 0;
+
+      const flashcardslist = [
+        {
+          question:
+            "Python is a low-level programming language. <br> <br> (True/False)",
+          answer: "False, is high-level",
+        },
+        { question: "Who created Python?", answer: "Guido van Rossum" },
+        {
+          question: "Python was developed in 1995. <br> <br> (True/False)",
+          answer: "False, it was developed in 1989",
+        },
+        {
+          question:
+            "Python is used for web development, artificial intelligence, and data analysis. <br> <br> (True/False)",
+          answer: "True",
+        },
+        {
+          question: "What is the main goal of Python?",
+          answer: `💠 A simple and readable language for easy learning.<br>
+          💠 A language addressing flaws in ABC while keeping its strengths.<br>
+          💠 A tool supporting exception handling and dynamic typing.<br>
+          💠 An open-source and multi-purpose language for a broad audience.
+            `,
+        },
+        {
+          question: "What type of license does Python have?",
+          answer: "Open source",
+        },
+        {
+          question:
+            "The first official release of Python was in 1991. <br> <br> (True/False)",
+          answer: "True",
+        },
+        {
+          question: "Python is a text-based language. <br> <br> (True/False)",
+          answer: "True",
+        },
+        {
+          question:
+            "Python is only used for complex software development. <br> <br> (True/False)",
+          answer: "False, it is also used for simple applications",
+        },
+        {
+          question:
+            "Python is supported by a global community. <br> <br> (True/False)",
+          answer: "True",
+        },
+        {
+          question:
+            "What is the key feature of Python that makes it popular among developers?",
+          answer: "Its simplicity and readability",
+        },
+        {
+          question: "What programming language is named after a planet?",
+          answer: "None, this question is misleading 🏃🏻‍♀️‍➡️",
+        },
+        {
+          question:
+            "Python supports exception handling. <br> <br> (True/False)",
+          answer: "True",
+        },
+        {
+          question: "Python is a static language. <br> <br> (True/False)",
+          answer: "True",
+        },
+        {
+          question:
+            "Python is used just in artificial intelligence. <br> <br> (True/False)",
+          answer: "False, is used in several fields",
+        },
+        {
+          question:
+            "Python is a slow programming language that works on all systems. <br> <br> (True/False)",
+          answer:
+            "False,  works on all systems but is fast programming language",
+        },
+        {
+          question:
+            "Python is known for its difficulty and unreadability.  <br> <br> (True/False)",
+          answer: "Python is known for its simplicity and readability",
+        },
+        {
+          question:
+            "Python's first official release was in February of which year?",
+          answer: "1991",
+        },
+        {
+          question:
+            "Guido van Rossum is the creator of Python, but where was it created?",
+          answer:
+            "reated at Centrum Wiskunde & Informatica (CWI) in the Netherlands.",
+        },
+        { question: "Is Python closed-source?", answer: "No, is open-source" },
+        {
+          question: "Which fields use Python widely?",
+          answer:
+            "Artificial intelligence, data science, web development, desktop applications, and more.",
+        },
+        {
+          question: "What is the Python community's role?",
+          answer:
+            "It is global and continuously contributes to Python's growth and evolution.",
+        },
+        {
+          question: "Python's development started in which decade?",
+          answer: "Late 1980s",
+        },
+      ];
+
+      function fillcards() {
+        const flashcards = document.getElementById("flashcards");
+        let allflashcards = ``;
+        for (let i = 0; i < flashcardslist.length; i++) {
+          allflashcards += `
+                <div class="flashcard" onclick="toggleFlip(event)">
+
+        <div class="flashcard-inner">
+            <div class="flashcard-front">${flashcardslist[i].question}</div>
+            <div class="flashcard-back">${flashcardslist[i].answer}</div>
+          </div>
+          </div>`;
+        }
+        flashcards.innerHTML = allflashcards;
+      }
+
+      function toggleFlip(event) {
+        const card = event.currentTarget;
+        const inner = card.querySelector(".flashcard-inner");
+        inner.style.transform =
+          inner.style.transform === "rotateY(180deg)"
+            ? "rotateY(0deg)"
+            : "rotateY(180deg)";
+      }
+
+      function moveSlide(direction) {
+        const flashcards = document.querySelectorAll(".flashcard");
+        const totalCards = flashcards.length;
+        currentIndex = (currentIndex + direction + totalCards) % totalCards;
+        flashcards.forEach((card, index) => {
+          card.style.display = index === currentIndex ? "block" : "none";
+        });
+        updateCardNumber();
+      }
+
+      function updateCardNumber() {
+        const totalCards = document.querySelectorAll(".flashcard").length;
+        const cardNumberElement = document.getElementById("card-number");
+        cardNumberElement.textContent = `Card ${
+          currentIndex + 1
+        } of ${totalCards}`;
+      }
+
+      // نجوم 🤸🏻‍♀️
+      function generateStars(numStars) {
+        const body = document.querySelector("body");
+        for (let i = 0; i < numStars; i++) {
+          const star = document.createElement("div");
+          star.classList.add("star");
+          const size = Math.random() * 3 + 2 + "px";
+          const topPosition = Math.random() * 100 + "%";
+          const leftPosition = Math.random() * 100 + "%";
+          star.style.width = size;
+          star.style.height = size;
+          star.style.top = topPosition;
+          star.style.left = leftPosition;
+          star.style.animationDuration = Math.random() * 3 + 2 + "s";
+          body.appendChild(star);
+        }
+      }
+
+      fillcards();
+      generateStars(50);
+      moveSlide(0);
+    </script>
+  </body>
+</html>
